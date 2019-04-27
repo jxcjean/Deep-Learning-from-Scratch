@@ -9,6 +9,7 @@ helloWorld("Deep Learning")
 #import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.image import imread
 
 np_a=np.array([[1,2],[3,4]])
 np_b=np.array([[1,3],[2,4]])
@@ -24,3 +25,6 @@ print(y)
 plt.plot(x,y)
 plt.show()
 
+img=imread('dataset/x1hm.png') # read a image
+plt.imshow(img)
+plt.show()
