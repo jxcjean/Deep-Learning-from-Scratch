@@ -1,5 +1,4 @@
-# Intel MKL FATAL ERROR: Cannot load mkl_intel_thread.dll.
-#### https://blog.csdn.net/zhangpeterx/article/details/84872125
+
 
 def helloWorld(object):
     print('*********Start ' + object + '*********')
@@ -9,22 +8,55 @@ helloWorld("Deep Learning")
 #import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.image import imread
+#from matplotlib.image import imread
 
-np_a=np.array([[1,2],[3,4]])
-np_b=np.array([[1,3],[2,4]])
-print(np_a+np_b)
-print(np_a[1])
-np_a=np_a.flatten()
-print(np_a)
+#阶跃函数qq
+def step_function(x):
+    return np.array(x>0,dtype=np.int)
 
-x=np.arange(0,6,0.1) #以0.1位单位，生成0-6的数据
-y=np.sin(x)
+#sigmoid函数
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
 
-print(y)
-plt.plot(x,y)
-plt.show()
+#reLU函数
+def relu(x):
+    return np.maximum(0,x)
 
-img=imread('dataset/x1hm.png') # read a image
-plt.imshow(img)
-plt.show()
+#恒等函数
+def identity_function(x):
+    return x
+
+#Softmax函数
+def softmax(a):
+    c=np.max(a)
+    exp_a=np.exp(a-c)#溢出对策
+    sum_exp_a=np.sum(exp_a)
+    y=exp_a/sum_exp_a
+    return y
+
+
+def init_network():
+    network = {}
+    network['W1'] = np.array([[0.1, 0.3, 0.5], [0.2, 0.4, 0.6]])
+    network['b1'] = np.array([0.1, 0.2, 0.3])
+    network['W2'] = np.array([[0.1, 0.4], [0.2, 0.5], [0.3, 0.6]])
+    network['b2'] = np.array([0.1, 0.2])
+    network['W3'] = np.array([[0.1, 0.3], [0.2, 0.4]])
+    network['b3'] = np.array([0.1, 0.2])
+    return network
+
+def forward(network, x):
+    W1, W2, W3 = network['W1'], network['W2'], network['W3']
+    b1, b2, b3 = network['b1'], network['b2'], network['b3']
+    a1 = np.dot(x, W1) + b1
+    z1 = sigmoid(a1)
+    a2 = np.dot(z1, W2) + b2
+    z2 = sigmoid(a2)
+    a3 = np.dot(z2, W3) + b3
+    y = identity_function(a3)
+    return y
+
+network = init_network()
+x = np.array([1.0, 0.5])#输入层q
+y = forward(network, x)
+print(y) # [ 0.31682708 0.69627909]

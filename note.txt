@@ -1,0 +1,7 @@
+
+1. how to fix error # Intel MKL FATAL ERROR: Cannot load mkl_intel_thread.dll.
+	refer to: https://blog.csdn.net/zhangpeterx/article/details/84872125
+
+
+书籍：《利用Python进行数据分析》
+网站：“Scipy Lecture Notes” 网站，以科学计算为主题的NumPy和Matplotlib的详细介绍
